@@ -16,7 +16,8 @@ public class QuizActivity extends Activity {
     private ImageButton mNextButton, mPrevButton;
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
-    private static final String TAG = "QuizActivity";
+//    private static final String TAG = "QuizActivity";
+    private static final String KEY_INDEX = "index";
 
 
     private TrueFalse[] mQuestionBank = new TrueFalse[]{
@@ -27,8 +28,9 @@ public class QuizActivity extends Activity {
             new TrueFalse(R.string.question_asia, true),
     };
 
-    private void updateQuestion(int index) {
-        int question = mQuestionBank[index].getQuestion();
+    private void updateQuestion() {
+//        Log.d(TAG,"Updating question text for question #" + mCurrentIndex, new Exception());
+        int question = mQuestionBank[mCurrentIndex].getQuestion();
         mQuestionTextView.setText(question);
     }
 
@@ -46,16 +48,19 @@ public class QuizActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate(Bundle) called");
+//        Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_quiz);
 
+        if (savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         mQuestionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion(mCurrentIndex);
+                updateQuestion();
             }
         });
 
@@ -82,7 +87,7 @@ public class QuizActivity extends Activity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion(mCurrentIndex);
+                updateQuestion();
             }
         });
 
@@ -95,47 +100,50 @@ public class QuizActivity extends Activity {
                 }else {
                     mCurrentIndex = mCurrentIndex - 1;
                 }
-                System.out.println(mCurrentIndex);
-                updateQuestion(mCurrentIndex);
+                updateQuestion();
             }
         });
 
-        updateQuestion(mCurrentIndex);
+        updateQuestion();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart(Bundle) called");
+//        Log.d(TAG, "onStart(Bundle) called");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume(Bundle) called");
+//        Log.d(TAG, "onResume(Bundle) called");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause(Bundle) called");
+//        Log.d(TAG, "onPause(Bundle) called");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop(Bundle) called");
+//        Log.d(TAG, "onStop(Bundle) called");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy(Bundle) called");
+//        Log.d(TAG, "onDestroy(Bundle) called");
     }
 
-    /**
-     * <classes>
-     */
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+//        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
