@@ -53,5 +53,18 @@
             <!--android:text="@string/next_button" />-->
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="66dp"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cheat_button"
+            android:id="@+id/cheat_button" />
+    </LinearLayout>
+
 
 </LinearLayout>
